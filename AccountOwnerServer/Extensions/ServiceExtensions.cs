@@ -1,3 +1,5 @@
+using Contracts;
+using LoggerService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +25,11 @@ namespace AccountOwnerServer.Extensions
             {
             });
 
+        }
+        //log config 
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
     }
 }
