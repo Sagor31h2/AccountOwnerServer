@@ -1,5 +1,7 @@
+using AccountOwnerServer.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,11 @@ namespace AccountOwnerServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //add core to startup
+            services.ConfigureCors();
+            //add iis to statup
+            services.ConfigureIISIntegration();
+
             services.AddControllers();
         }
 
@@ -37,8 +44,16 @@ namespace AccountOwnerServer
             }
 
             app.UseHttpsRedirection();
+            //add
+            app.UseStaticFiles();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
 
             app.UseRouting();
+            //add
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
