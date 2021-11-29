@@ -4,13 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace Entities
 {
-    class RepositoryContext:DbContext
+    public class RepoContext:DbContext
     {
-        public RepositoryContext(DbContextOptions options)
-              : base(options)
+        public RepoContext(DbContextOptions options)
+           : base(options)
         {
         }
         public DbSet<Owner> Owners { get; set; }

@@ -1,7 +1,9 @@
 using AccountOwnerServer.Extensions;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +32,9 @@ namespace AccountOwnerServer
             services.ConfigureIISIntegration();
             //logging
             services.ConfigureLoggerService();
+
+            services.AddDbContext<RepoContext> (options => options
+                        .UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
         }
