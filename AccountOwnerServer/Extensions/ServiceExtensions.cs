@@ -2,6 +2,7 @@ using Contracts;
 using LoggerService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 
 namespace AccountOwnerServer.Extensions
 {
@@ -30,6 +31,12 @@ namespace AccountOwnerServer.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+
+        //unit of work
+        public static void ConfigureRepositoryWrapper(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
     }
 }

@@ -36,6 +36,10 @@ namespace AccountOwnerServer
             services.AddDbContext<RepoContext> (options => options
                         .UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            //unit of work 
+            services.ConfigureRepositoryWrapper();
+
+
             services.AddControllers();
         }
 
