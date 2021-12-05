@@ -1,6 +1,8 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Repository
 {
@@ -11,5 +13,12 @@ namespace Repository
         {
         }
 
+        public IEnumerable<Owner> GetAllOwners()
+        {
+            return FindAll().
+                   OrderBy(ow => ow.Name)
+                   .ToList();
+
+        }
     }
 }
