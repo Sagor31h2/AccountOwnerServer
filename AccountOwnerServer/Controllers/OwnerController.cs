@@ -1,6 +1,9 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace AccountOwnerServer.Controllers
 {
@@ -10,10 +13,12 @@ namespace AccountOwnerServer.Controllers
     {
         private ILoggerManager _logger;
         private IRepositoryWrapper _repository;
-        public OwnerController(ILoggerManager logger, IRepositoryWrapper repository)
+        private IMapper _mapper;
+        public OwnerController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _mapper = mapper;
         }
 
 
@@ -24,7 +29,8 @@ namespace AccountOwnerServer.Controllers
             {
                 var owners = _repository.Owner.GetAllOwners();
                 _logger.LogInfo($"Returned all owners from database.");
-                return Ok(owners);
+                var ownerResult = _mapper.Map<IEnumerable<OwnerDto>>(owners);
+                return Ok(ownerResult);
             }
             catch (Exception ex)
             {

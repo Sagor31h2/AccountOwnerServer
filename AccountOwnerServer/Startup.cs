@@ -38,6 +38,7 @@ namespace AccountOwnerServer
 
             //unit of work 
             services.ConfigureRepositoryWrapper();
+            services.AddAutoMapper(typeof(Startup));
 
 
             services.AddControllers();
