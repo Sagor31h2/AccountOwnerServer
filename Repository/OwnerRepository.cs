@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,12 @@ namespace Repository
                    OrderBy(ow => ow.Name)
                    .ToList();
 
+        }
+
+        public Owner GetOwnerById(Guid ownerId)
+        {
+            return FindByCondition(owner => owner.Id.Equals(ownerId))
+                    .FirstOrDefault();
         }
     }
 }

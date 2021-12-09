@@ -21,7 +21,7 @@ namespace AccountOwnerServer.Controllers
             _mapper = mapper;
         }
 
-
+        //All owners
         [HttpGet]
         public IActionResult GetAllOwners()
         {
@@ -35,6 +35,33 @@ namespace AccountOwnerServer.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside GetAllOwners action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        //Get owner by Id
+        [HttpGet("{id}")]
+        public IActionResult GetOwnerById(Guid id)
+        {
+            try
+            {
+                var owner = _repository.Owner.GetOwnerById(id);
+
+                if (owner == null)
+                {
+                    _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Returned owner with id: {id}");
+
+                    var ownerResult = _mapper.Map<OwnerDto>(owner);
+                    return Ok(ownerResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetOwnerById action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
