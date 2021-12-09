@@ -8,5 +8,6 @@ namespace Contracts
     {
         IEnumerable<Owner> GetAllOwners();
         Owner GetOwnerById(Guid id);
+        Owner GetOwnerWithDetails(Guid ownerId);
     }
 }
