@@ -47,5 +47,12 @@ namespace Repository
         {
             Update(owner);
         }
+
+        //delete
+        public void DeleteOwner(Owner owner)
+        {
+            Delete(owner);
+        }
+
     }
 }
