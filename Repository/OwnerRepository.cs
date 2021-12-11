@@ -35,5 +35,11 @@ namespace Repository
                 .Include(ac => ac.Accounts)
                 .FirstOrDefault();
         }
+
+        //Create owner 
+        public void CreateOwner(Owner owner)
+        {
+            Create(owner);
+        }
     }
 }
