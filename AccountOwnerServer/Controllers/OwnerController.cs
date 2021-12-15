@@ -4,7 +4,6 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AccountOwnerServer.Controllers
@@ -25,20 +24,11 @@ namespace AccountOwnerServer.Controllers
 
         //All owners
         [HttpGet]
-        public IActionResult GetAllOwners()
+        public IActionResult GetOwners([FromQuery] OwnerParameters ownerParameters)
         {
-            try
-            {
-                var owners = _repository.Owner.GetAllOwners();
-                _logger.LogInfo($"Returned all owners from database.");
-                var ownerResult = _mapper.Map<IEnumerable<OwnerDto>>(owners);
-                return Ok(ownerResult);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside GetAllOwners action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+            var owners = _repository.Owner.GetOwners(ownerParameters);
+            _logger.LogInfo($"All user returned from database");
+            return Ok(owners);
         }
         //Get owner by Id
         [HttpGet("{id}", Name = "OwnerById")]

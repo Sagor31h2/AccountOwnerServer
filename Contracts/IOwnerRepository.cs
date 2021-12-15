@@ -6,7 +6,7 @@ namespace Contracts
 {
     public interface IOwnerRepository : IRepositoryBase<Owner>
     {
-        IEnumerable<Owner> GetAllOwners();
+        IEnumerable<Owner> GetOwners(OwnerParameters ownerParameters);
         Owner GetOwnerById(Guid id);
         Owner GetOwnerWithDetails(Guid ownerId);
         void CreateOwner(Owner owner);

@@ -15,10 +15,12 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Owner> GetAllOwners()
+        public IEnumerable<Owner> GetOwners(OwnerParameters ownerParameters)
         {
             return FindAll().
                    OrderBy(ow => ow.Name)
+                   .Skip((ownerParameters.PageNumber - 1) * ownerParameters.PageSize)
+                   .Take(ownerParameters.PageSize)
                    .ToList();
 
         }
