@@ -1,12 +1,12 @@
-﻿using Entities.Models;
+﻿using Entities.Helpers;
+using Entities.Models;
 using System;
-using System.Collections.Generic;
 
 namespace Contracts
 {
     public interface IOwnerRepository : IRepositoryBase<Owner>
     {
-        IEnumerable<Owner> GetOwners(OwnerParameters ownerParameters);
+        PagedList<Owner> GetOwners(OwnerParameters ownerParameters);
         Owner GetOwnerById(Guid id);
         Owner GetOwnerWithDetails(Guid ownerId);
         void CreateOwner(Owner owner);

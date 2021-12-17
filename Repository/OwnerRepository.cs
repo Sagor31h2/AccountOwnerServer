@@ -1,9 +1,9 @@
 ﻿using Contracts;
 using Entities;
+using Entities.Helpers;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository
@@ -15,13 +15,10 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Owner> GetOwners(OwnerParameters ownerParameters)
+        public PagedList<Owner> GetOwners(OwnerParameters ownerParameters)
         {
-            return FindAll().
-                   OrderBy(ow => ow.Name)
-                   .Skip((ownerParameters.PageNumber - 1) * ownerParameters.PageSize)
-                   .Take(ownerParameters.PageSize)
-                   .ToList();
+            return PagedList<Owner>.ToPagedList(FindAll().OrderBy(on => on.Name),
+                ownerParameters.PageNumber, ownerParameters.PageSize);
 
         }
 

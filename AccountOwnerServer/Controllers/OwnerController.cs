@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -27,7 +28,20 @@ namespace AccountOwnerServer.Controllers
         public IActionResult GetOwners([FromQuery] OwnerParameters ownerParameters)
         {
             var owners = _repository.Owner.GetOwners(ownerParameters);
-            _logger.LogInfo($"All user returned from database");
+
+            var metadata = new
+            {
+                owners.TotalCount,
+                owners.PageSize,
+                owners.CurrentPage,
+                owners.TotalPages,
+                owners.HasNext,
+                owners.HasPrevious
+            };
+
+            Response.Headers.Add("X", JsonConvert.SerializeObject(metadata));
+
+            _logger.LogInfo($"Returned{owners.TotalCount} from database");
             return Ok(owners);
         }
         //Get owner by Id
