@@ -21,10 +21,18 @@ namespace Repository
                                 o.DateOfBirth.Year <= ownerParameters.MaxYearOfBirth)
                             .OrderBy(on => on.Name);
 
-            return PagedList<Owner>.ToPagedList(owners,
+            SearchByName(ref owners, ownerParameters.Name);
+
+            return PagedList<Owner>.ToPagedList(owners.OrderBy(on => on.Name),
                 ownerParameters.PageNumber,
                 ownerParameters.PageSize);
 
+        }
+        private void SearchByName(ref IQueryable<Owner> owners, string ownerName)
+        {
+            if (!owners.Any() || string.IsNullOrWhiteSpace(ownerName))
+                return;
+            owners = owners.Where(o => o.Name.ToLower().Contains(ownerName.Trim().ToLower()));
         }
 
         public Owner GetOwnerById(Guid ownerId)
