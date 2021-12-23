@@ -9,6 +9,11 @@ namespace Entities.Models
         public bool ValidYearRange => MaxYearOfBirth > MinYearOfBirth;
 
         public string Name { get; set; }
+
+        public OwnerParameters()
+        {
+            OrderBy = "name";
+        }
     }
 
 }
